@@ -36,10 +36,10 @@ public:
 
 private:
 	friend QDataStream &operator>>(QDataStream &, AAFilter &);
-	friend QDataStream &operator<<(QDataStream &, const AAFilter &);
+    friend QDataStream &operator<<(QDataStream &, const AAFilter &);
 
 	bool m_allAlbums, m_notTaggedAlbum;
-	QStringList m_albums, m_artists;
+    QStringList m_albums, m_artists;
 };
 
 QDataStream &operator<<(QDataStream &, const AAFilter &);

@@ -29,8 +29,8 @@ QPointer<PassivePopup> PassivePopup::visible;
 
 PassivePopup::PassivePopup(const QString &caption, const QString &text, const QPixmap &pixmap,
         PassivePopup::Position pos, int timeout) : QFrame(0, Qt::X11BypassWindowManagerHint
-#ifndef Q_WS_X11
-	| Qt::SplashScreen
+#if ! (defined (Q_WS_X11) || defined (Q_OS_LINUX))
+    | Qt::SplashScreen
 #endif
 | Qt::WindowStaysOnTopHint) {
 	setObjectName("passivepopup");

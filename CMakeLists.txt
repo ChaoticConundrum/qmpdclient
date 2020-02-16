@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 
-find_package(Qt4 4.4.0 COMPONENTS QtCore QtGui QtNetwork QtXml QtXmlPatterns REQUIRED QtDBus)
+project(QMPDClient C CXX)
+
+#find_package(Qt4 4.4.0 COMPONENTS QtCore QtGui QtNetwork QtXml QtXmlPatterns REQUIRED QtDBus)
+find_package(Qt5 COMPONENTS Core Widgets Network Xml XmlPatterns DBus X11Extras REQUIRED)
 if(UNIX)
 	if(NOT MAC)
 		find_package(X11 REQUIRED)
@@ -10,6 +13,9 @@ endif()
 SET (QT_USE_QTNETWORK TRUE)
 SET (QT_USE_QTXMLPATTERNS TRUE)
 SET (QT_USE_QTXML TRUE)
+
+SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+SET(CMAKE_AUTOMOC TRUE)
 
 if(WIN32)
 	SET (QT_USE_QTMAIN TRUE)
@@ -210,7 +216,8 @@ SET(QMPDClient_uis
 
 if(UNIX)
 	if(NOT MAC)
-		if(QT_QTDBUS_FOUND)
+        #if(QT_QTDBUS_FOUND)
+        if(0)
 			message(STATUS "QtDBus found")
 			SET (QT_USE_QTDBUS TRUE)
 			list(APPEND QMPDClient_srcs src/notifications_dbus.cpp)
@@ -233,10 +240,12 @@ if(WIN32)
 			src/qmpdclient_win.cpp icons/resource.rc)
 endif()
 
-include(${QT_USE_FILE})
-qt4_wrap_cpp(QMPDClient_ppd_hdrs ${QMPDClient_hdrs})
-qt4_add_resources(QMPDClient_ppd_res qmpdclient.qrc)
-qt4_wrap_ui(QMPDClient_ppd_uis ${QMPDClient_uis})
+#include(${QT_USE_FILE})
+#qt4_wrap_cpp(QMPDClient_ppd_hdrs ${QMPDClient_hdrs})
+#qt4_add_resources(QMPDClient_ppd_res qmpdclient.qrc)
+qt5_add_resources(QMPDClient_ppd_res qmpdclient.qrc)
+#qt4_wrap_ui(QMPDClient_ppd_uis ${QMPDClient_uis})
+qt5_wrap_ui(QMPDClient_ppd_uis ${QMPDClient_uis})
 include_directories (${CMAKE_CURRENT_BINARY_DIR}
 	src)
 
@@ -284,12 +293,14 @@ ADD_CUSTOM_COMMAND (OUTPUT
 
 add_definitions(-DNAMEVER="${NAMEVER}" -DPREFIX="${CMAKE_INSTALL_PREFIX}" -DVERSION="${VERSION}")
 
-add_executable(qmpdclient ${QMPDClient_srcs} ${QMPDClient_ppd_hdrs} ${QMPDClient_ppd_uis} ${QMPDClient_ppd_res} ${COMPILED_TRANSLATIONS})
+#add_executable(qmpdclient ${QMPDClient_srcs} ${QMPDClient_ppd_hdrs} ${QMPDClient_ppd_uis} ${QMPDClient_ppd_res} ${COMPILED_TRANSLATIONS})
+add_executable(qmpdclient ${QMPDClient_srcs} ${QMPDClient_hdrs} ${QMPDClient_ppd_uis} ${QMPDClient_ppd_res} ${COMPILED_TRANSLATIONS})
 
-target_link_libraries(qmpdclient ${QT_LIBRARIES})
+#target_link_libraries(qmpdclient ${QT_LIBRARIES})
+target_link_libraries(qmpdclient Qt5::Widgets Qt5::Network Qt5::Xml Qt5::XmlPatterns Qt5::DBus Qt5::X11Extras)
 if(UNIX)
 	if(NOT MAC)
-		target_link_libraries(qmpdclient ${X11_LIBRARIES})
+        target_link_libraries(qmpdclient ${X11_LIBRARIES})
 	endif()
 endif()
 if(WIN32)

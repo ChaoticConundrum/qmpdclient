@@ -31,7 +31,7 @@
 Config* Config::m_instance = 0;
 
 Config::Config() :
-#ifndef Q_WS_X11
+#if ! (defined (Q_WS_X11) || defined (Q_OS_LINUX))
 		QSettings(IniFormat, UserScope, "QMPDClient", "QMPDClient") {
 #else
 		QSettings("QMPDClient", "QMPDClient") {

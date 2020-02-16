@@ -136,6 +136,7 @@ MPDSongList MPDSongModel::songs(const QModelIndexList &indexes) const {
 }
 
 void MPDSongModel::filter() {
+    beginResetModel();
 	if (m_filter.isEmpty()) {
 		m_visible = m_all;
 	} else {
@@ -146,7 +147,7 @@ void MPDSongModel::filter() {
 				m_visible << s;
 		}
 	}
-	reset();
+    endResetModel();
 }
 
 void MPDSongModel::sort(int column, Qt::SortOrder order) {

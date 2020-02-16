@@ -31,6 +31,8 @@
 #include <QTimer>
 #include <QFile>
 #include <QDir>
+#include <QUrlQuery>
+#include <QDataStream>
 
 #include <QDebug>
 
@@ -115,7 +117,7 @@ void LastFmSubmitter::scrobbleNp(MPDSong & s) {
 	QUrl url(m_npUrl);
 	QNetworkRequest request(url);
 	request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-	m_netAccess->post(request, data.toAscii());
+    m_netAccess->post(request, data.toLatin1());
 }
 
 void LastFmSubmitter::scrobbleCurrent() {
@@ -158,7 +160,7 @@ void LastFmSubmitter::scrobbleQueued() {
 		QUrl url(m_subUrl);
 		QNetworkRequest request(url);
 		request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-		m_netAccess->post(request, data.toAscii());
+        m_netAccess->post(request, data.toLatin1());
 		m_awaitingScrob = true;
 	}
 }
@@ -173,10 +175,10 @@ bool LastFmSubmitter::ensureHandshaked() {
 QByteArray LastFmSubmitter::getPasswordHash() {
 	QByteArray passwordHash;
 	if (Config::instance()->lastFmHashedPassword())
-		passwordHash = Config::instance()->lastFmPassword().toAscii();
+        passwordHash = Config::instance()->lastFmPassword().toLatin1();
 	else
 		passwordHash = QCryptographicHash::hash(
-			Config::instance()->lastFmPassword().toAscii(),
+            Config::instance()->lastFmPassword().toLatin1(),
 			QCryptographicHash::Md5).toHex();
 
 	//accomplish it with current time
@@ -200,7 +202,7 @@ void LastFmSubmitter::doHandshake() {
 		//qDebug("handshaking delayed");
 		return;
 	}
-	QUrl hsUrl = handshakeUrl();
+    QUrlQuery hsUrl(handshakeUrl());
 	hsUrl.addQueryItem("hs", "true");
 	hsUrl.addQueryItem("p", "1.2.1");
 	hsUrl.addQueryItem("c", "qmn");
@@ -209,7 +211,7 @@ void LastFmSubmitter::doHandshake() {
 	hsUrl.addQueryItem("t", QString::number(time(NULL)));
 	hsUrl.addQueryItem("a", getPasswordHash().toHex());
 
-	m_netAccess->get(QNetworkRequest(hsUrl));
+    m_netAccess->get(QNetworkRequest(hsUrl.query(QUrl::FullyEncoded)));
 	//qDebug() << "handshake sent to " << hsUrl.toString();
 
 	m_awaitingHS = true;
@@ -227,13 +229,13 @@ void LastFmSubmitter::gotNetReply(QNetworkReply * reply) {
 	QStringList data = QString(reply->readAll()).split("\n");
 	if(data.size()==0)
 		return;
-	QUrl reqUrl = reply->url();
+    QUrlQuery reqUrl(reply->url());
 	reqUrl.setQueryItems(QList<QPair<QString, QString> >());
 	//qDebug( (QString("reply from ")+reqUrl.toString()).toAscii().data());
 
 	bool handled= false;
 	// Is this is a handshake reply?
-	if(reqUrl==handshakeUrl())
+    if(reqUrl.query(QUrl::FullyEncoded) == handshakeUrl().query(QUrl::FullyEncoded))
 	{
 		m_awaitingHS = false;
 		if(data.size() >= 4 && data[0]=="OK")

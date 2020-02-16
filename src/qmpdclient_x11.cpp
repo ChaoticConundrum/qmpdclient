@@ -22,7 +22,7 @@
 #include "qmpdclient.h"
 
 #include <QDesktopWidget>
-#include <QX11Info>
+#include <QtX11Extras/QX11Info>
 #include <X11/Xlib.h>
 #define XF86AUDIO_VOLUP 176
 #define XF86AUDIO_VOLDN 174

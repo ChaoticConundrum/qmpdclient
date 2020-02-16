@@ -25,6 +25,7 @@
 #include <QApplication>
 #include <QFont>
 #include <QMimeData>
+#include <QDataStream>
 
 PlaylistModel::PlaylistModel(QObject *p) : MPDSongModel(p, 0),
 		m_topDrop(false) {
@@ -33,8 +34,9 @@ PlaylistModel::PlaylistModel(QObject *p) : MPDSongModel(p, 0),
 }
 
 void PlaylistModel::setPattern(const QString &p) {
+    beginResetModel();
 	m_pattern = p;
-	reset();
+    endResetModel();
 }
 
 QString PlaylistModel::pattern() const {
@@ -117,11 +119,13 @@ void PlaylistModel::setFilter(const QString &a) {
 
 void PlaylistModel::filter() {
 	if (m_filter.isEmpty()) {
-		m_visible = m_all;
-		reset();
+        beginResetModel();
+        m_visible = m_all;
+        endResetModel();
 		return;
 	}
 
+    beginResetModel();
 	m_visible.clear();
 	for (QListIterator<MPDSong> it(m_all); it.hasNext();) {
 		MPDSong s = it.next();
@@ -137,7 +141,7 @@ void PlaylistModel::filter() {
 		        || s.time().contains(m_filter))
 			m_visible << s;
 	}
-	reset();
+    endResetModel();
 }
 
 /*

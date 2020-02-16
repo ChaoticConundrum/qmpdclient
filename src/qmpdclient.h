@@ -23,6 +23,9 @@
 #include <QApplication>
 #include <QPointer>
 #include <QSessionManager>
+//#include <X11/Xlib.h>
+union _XEvent;
+typedef _XEvent XEvent;
 
 class MainWindow;
 class QTranslator;
@@ -32,7 +35,7 @@ class QMPDClient : public QApplication {
 public:
 	QMPDClient(int &, char **);
 	~QMPDClient();
-#ifdef Q_WS_X11
+#if defined (Q_WS_X11) || defined (Q_OS_LINUX)
 	bool x11EventFilter(XEvent *);
 #else
 	bool eventFilter(QObject *, QEvent *);

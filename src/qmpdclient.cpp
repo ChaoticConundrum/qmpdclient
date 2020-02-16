@@ -189,7 +189,7 @@ void QMPDClient::opaqueResizeChanged(bool a) {
  * either the main window or the tray icon. So, if the wheelEvents
  * position is outside the mainwindow frame, it must be the tray icon.
  */
-#ifndef Q_WS_X11
+#if ! (defined (Q_WS_X11) || defined (Q_OS_LINUX))
 bool QMPDClient::eventFilter(QObject *watched, QEvent *event) {
 	if (event->type() == QEvent::Wheel) {
 		QWheelEvent *e = static_cast<QWheelEvent*>(event);

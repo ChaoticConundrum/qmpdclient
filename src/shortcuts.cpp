@@ -36,7 +36,7 @@ Shortcuts *Shortcuts::instance() {
 
 #define LOAD(GET, SET, OBJ) \
 do { \
-Config::instance()->setOriginalShortcut(OBJ->objectName(), OBJ->GET()); \
+Config::instance()->setOriginalShortcut(OBJ->objectName(), OBJ->GET().toString()); \
 OBJ->SET(Config::instance()->shortcut(OBJ->objectName())); \
 m_objects << OBJ; \
 } while (0)
@@ -45,7 +45,7 @@ void Shortcuts::updateTranslation() {
 	// When translation changes, some shortcuts are also retranslated. Read originals again.
 	m_objects.clear();
 	foreach(QShortcut *shortcut, parent()->findChildren<QShortcut*>()) {
-		LOAD(key, setKey, shortcut);
+        LOAD(key, setKey, shortcut);
 	}
 	foreach(QAbstractButton *button, parent()->findChildren<QAbstractButton*>()) {
 		if (button->text().isEmpty() && !button->shortcut().isEmpty()) {
@@ -53,7 +53,7 @@ void Shortcuts::updateTranslation() {
 		}
 	}
 	foreach(QAction *action, parent()->findChildren<QAction*>(QRegExp("Menu$"))) {
-		LOAD(shortcut, setShortcut, action);
+        LOAD(shortcut, setShortcut, action);
 	}
 }
 

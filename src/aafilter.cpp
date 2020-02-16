@@ -18,6 +18,7 @@
  */
 
 #include "aafilter.h"
+#include <QDataStream>
 
 AAFilter::AAFilter() :
 		m_allAlbums(false),

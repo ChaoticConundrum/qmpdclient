@@ -32,7 +32,7 @@
 #include <QSlider>
 #include <QWheelEvent>
 #include <QDesktopWidget>
-#ifndef Q_WS_X11
+#if ! (defined (Q_WS_X11) || defined (Q_OS_LINUX))
 #include "macroexpander.h"
 #endif
 
@@ -70,8 +70,8 @@ private:
 
 
 TrayIcon::TrayIcon(QWidget *parent) : QSystemTrayIcon(parent),
-#ifndef Q_WS_X11
-		m_connected(":/icons/16x16/qmpdclient.png"),
+#if ! (defined (Q_WS_X11) || defined (Q_OS_LINUX))
+        m_connected(":/icons/16x16/qmpdclient.png"),
 		m_disconnected(":/icons/16x16/qmpdclientd.png")
 #else
 		m_connected(":/icons/22x22/qmpdclient.png"),
@@ -156,8 +156,8 @@ void TrayIcon::setSong(const MPDSong &s) {
 
 	if (s.isNull()) {
 		QString msg = tr("Not playing", "This is for the trayicon tooltip, indicating that no song is playing");
-#ifndef Q_WS_X11
-		// Win32 and OSX does not seem to support richtext in tooltips
+#if ! (defined (Q_WS_X11) || defined (Q_OS_LINUX))
+        // Win32 and OSX does not seem to support richtext in tooltips
 		setToolTip(msg);
 #else
 		QString tooltip = "<html><body>";
@@ -170,8 +170,8 @@ void TrayIcon::setSong(const MPDSong &s) {
 		return;
 	}
 
-#ifndef Q_WS_X11
-	// Win32 and OSX does not seem to support richtext in tooltips
+#if ! (defined (Q_WS_X11) || defined (Q_OS_LINUX))
+    // Win32 and OSX does not seem to support richtext in tooltips
 	setToolTip(expandMacros(s, Config::instance()->playlistPattern()));
 #else
 	QString tooltip = "<html><body><table>";
