@@ -91,7 +91,8 @@ void MPDCache::rescan(const QList<MPDDirectory> &dirs) const {
 void MPDCache::rescan() const {
 	if (!d->isConnected())
 		return;
-	mpd_call(MPDCache::rescan, Update, "");
+	char arg[] = "";
+	mpd_call(MPDCache::rescan, Update, arg);
 	mpd_cleanup();
 }
 
@@ -125,7 +126,7 @@ QStringList MPDCache::albumsByArtists(const QStringList &artists) {
 			foreach(QSet<QString> albums, d->artistAlbumMap.values()) {
 				ret.unite(albums);
 			}
-			QStringList retList = ret.toList();
+			QStringList retList = ret.values();
 			retList.sort();
 			return retList;
 		}
@@ -153,7 +154,7 @@ QStringList MPDCache::albumsByArtists(const QStringList &artists) {
 	}
 	STOP;
 
-	QStringList ret = albums.toList();
+	QStringList ret = albums.values();
 	ret.sort();
 	return ret;
 }

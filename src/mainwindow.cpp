@@ -145,7 +145,7 @@ void MainWindow::updateTranslation() {
 
 void MainWindow::connectionChanged() {
 	const bool con = MPDConnection::instance()->isConnected();
-	foreach(QWidget *w, findChildren<QWidget*>(QRegExp("Panel$"))) {
+	foreach(QWidget *w, findChildren<QWidget*>("Panel$")) {
 		w->setEnabled(con);
 	}
 }

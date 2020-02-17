@@ -50,7 +50,7 @@ void TimeLabel::setTime(int elapsed, int total) {
 }
 
 QSize TimeLabel::minimumSizeHint() const {
-	return QSize(fontMetrics().width(m_remaning ? m_remaningText : m_elapsedText), height());
+	return QSize(fontMetrics().horizontalAdvance(m_remaning ? m_remaningText : m_elapsedText), height());
 }
 
 TotalTimeLabel::TotalTimeLabel(QWidget *p) : QLabel("0:00", p) {}

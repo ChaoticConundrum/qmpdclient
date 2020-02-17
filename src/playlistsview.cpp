@@ -44,10 +44,11 @@ void PlaylistsView::updateTranslation() {
 }
 
 void PlaylistsView::selectionChanged(const QItemSelection &s, const QItemSelection &u) {
-	Q_ASSERT(m_contentView);
-	MPDSongView::selectionChanged(s, u);
-	emit toggleActions(!s.indexes().isEmpty());
-	m_contentView->setSongs(MPDCache::instance()->songsByPlaylists(m_model->songs(s.indexes())));
+    MPDSongView::selectionChanged(s, u);
+    emit toggleActions(!s.indexes().isEmpty());
+	if(m_contentView) {
+        m_contentView->setSongs(MPDCache::instance()->songsByPlaylists(m_model->songs(s.indexes())));
+    }
 }
 
 

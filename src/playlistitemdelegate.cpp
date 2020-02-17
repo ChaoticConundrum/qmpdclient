@@ -79,7 +79,7 @@ void PlaylistDelegate::drawDisplay(QPainter *p, const QStyleOptionViewItem &opti
 	const int textMargin = QApplication::style()->pixelMetric(QStyle::PM_FocusFrameHMargin) + 1;
 	const QString myText = text.section('|', 0, -2);
 	const QString myTime = text.section('|', -1, -1);
-	const int timeWidth = p->fontMetrics().width(myTime);
+	const int timeWidth = p->fontMetrics().horizontalAdvance(myTime);
 	const int timeMargin = 5;
 
 	QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0); // remove width padding

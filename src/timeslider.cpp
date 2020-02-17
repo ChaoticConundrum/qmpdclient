@@ -53,7 +53,7 @@ void TimeSlider::paintEvent(QPaintEvent *e) {
 
 	QFontMetrics fm = fontMetrics();
 	QString text = tr("Streaming");
-	const int w = fm.width(text);
+	const int w = fm.horizontalAdvance(text);
 	const int h = fm.height();
 	const int x = (width()/2) - (w/2);
 	const int y = (height()/2) - (h/2);

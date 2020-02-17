@@ -27,10 +27,12 @@
 #include "mpdsonglist.h"
 #include <QMenu>
 
-DirectoryView::DirectoryView(QWidget *parent) : AbstractTree(parent) {
+DirectoryView::DirectoryView(QWidget *parent) : AbstractTree(parent), m_model(nullptr), m_fileView(nullptr),
+    m_enqueueAction(nullptr), m_playAction(nullptr), m_rescanAction(nullptr), m_informationAction(nullptr) {
 	Q_ASSERT(m_menu);
 	setObjectName("directoryview");
-	setModel(m_model = new DirectoryModel(this));
+    m_model = new DirectoryModel(this);
+	setModel(m_model);
 
 	// playlist m_menu
 	m_enqueueAction = addMenuAction("enqueue", this, SLOT(enqueue()));
@@ -61,9 +63,10 @@ void DirectoryView::updateTranslation() {
 }
 
 void DirectoryView::selectionChanged(const QItemSelection &s, const QItemSelection &u) {
-	Q_ASSERT(m_fileView);
-	AbstractTree::selectionChanged(s, u);
-	m_fileView->setSongs(selectedSongsShallow());
+    AbstractTree::selectionChanged(s, u);
+    if(m_fileView) {
+        m_fileView->setSongs(selectedSongsShallow());
+    }
 }
 
 void DirectoryView::setRoot(const MPDDirectory &root) {

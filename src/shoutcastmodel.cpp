@@ -84,7 +84,7 @@ void ShoutcastModel::newStationsAvailable(const QString & keyWord) {
 		QStandardItem * bitRate = new LeadingIntSortedStandardItem(QString::number(station.bitRate()) + tr(" bps"));
 		QStandardItem * listeners = new LeadingIntSortedStandardItem(QString::number(station.listeners()));
 		QStandardItem * name = new QStandardItem(station.name());
-		name->setData(qVariantFromValue(station), StationRole);
+		name->setData(QVariant::fromValue(station), StationRole);
 		genreItem->appendRow(QList<QStandardItem * >() << name << bitRate << listeners);
 		name->appendRow(new QStandardItem(tr("Please wait")));
 	}

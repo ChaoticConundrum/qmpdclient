@@ -24,6 +24,7 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QTimer>
+#include <QScreen>
 
 QPointer<PassivePopup> PassivePopup::visible;
 
@@ -49,7 +50,8 @@ PassivePopup::PassivePopup(const QString &caption, const QString &text, const QP
 	grid->addWidget(textLabel, 1, 1, Qt::AlignTop);
 
 	resize(sizeHint());
-	QRect geom = QApplication::desktop()->screenGeometry();
+//	QRect geom = QApplication::desktop()->screenGeometry();
+	QRect geom = QGuiApplication::screens().first()->geometry();
 
 	int x = geom.width() - width();
 	int y = geom.height() - height();

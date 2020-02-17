@@ -161,5 +161,5 @@ void MPDSongList::sort(int column, Qt::SortOrder order) {
 	if (isEmpty())
 		return;
 	MPDSongListLessThan lt(column, order);
-	qSort(begin(), end(), lt);
+	std::sort(begin(), end(), lt);
 }

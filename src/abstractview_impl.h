@@ -89,7 +89,7 @@ void TYPE::paintEvent(QPaintEvent *e) {
 		return;
 	}
 	const QString text = qApp->translate("AbstractView", "Not connected");
-	const int x = width() / 2 - fontMetrics().width(text) / 2;
+	const int x = width() / 2 - fontMetrics().horizontalAdvance(text) / 2;
 	const int y = height() / 2 - fontMetrics().height() / 2;
 	QPainter p(viewport());
 	p.drawText(x, y, text);

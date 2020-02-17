@@ -216,7 +216,7 @@ void TrayIcon::disconnected() {
 }
 
 void TrayIcon::toggleEnabled(bool enabled) {
-	foreach(QAction *w, contextMenu()->findChildren<QAction*>(QRegExp("Action$"))) {
+	foreach(QAction *w, contextMenu()->findChildren<QAction*>("Action$")) {
 		w->setEnabled(enabled);
 	}
 	m_volumeMenu->setEnabled(enabled);

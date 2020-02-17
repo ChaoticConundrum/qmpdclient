@@ -10,3 +10,6 @@
 /lang/*.qm
 build
 /CMakeLists.txt.user
+
+/.idea/
+/cmake-build-*/

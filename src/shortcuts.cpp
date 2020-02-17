@@ -52,7 +52,7 @@ void Shortcuts::updateTranslation() {
 			LOAD(shortcut, setShortcut, button);
 		}
 	}
-	foreach(QAction *action, parent()->findChildren<QAction*>(QRegExp("Menu$"))) {
+	foreach(QAction *action, parent()->findChildren<QAction*>("Menu$")) {
         LOAD(shortcut, setShortcut, action);
 	}
 }
