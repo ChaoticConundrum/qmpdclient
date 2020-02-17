@@ -23,6 +23,7 @@
 #include "headerview.h"
 #include "mpdsongview.h"
 
+class PlaylistsHeader;
 class PlaylistsContentView;
 
 class PlaylistsView : public MPDSongView {
@@ -43,6 +44,7 @@ signals:
 private:
 	void selectionChanged(const QItemSelection & = QItemSelection(), const QItemSelection & = QItemSelection());
 
+	PlaylistsHeader *m_plheader;
 	PlaylistsContentView *m_contentView;
 	QAction *m_deleteAction;
 };

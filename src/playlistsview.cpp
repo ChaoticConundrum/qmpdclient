@@ -23,10 +23,13 @@
 #include "plconview.h"
 #include <QMenu>
 
-PlaylistsView::PlaylistsView(QWidget *parent) : MPDSongView(parent) {
+PlaylistsView::PlaylistsView(QWidget *parent) : MPDSongView(parent),
+                                                m_plheader(nullptr), m_contentView(nullptr),
+                                                m_deleteAction(nullptr) {
 	Q_ASSERT(m_menu);
 	setObjectName("playlistsview");
-	setHeaderView(new PlaylistsHeader(this));
+	m_plheader = new PlaylistsHeader(this);
+	setHeaderView(m_plheader);
 
 	m_menu->addSeparator();
 	m_deleteAction = addMenuAction("delete", this, SLOT(deletePlaylist()));

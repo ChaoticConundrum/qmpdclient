@@ -27,8 +27,10 @@
 #include "mpdsonglist.h"
 #include <QMenu>
 
-DirectoryView::DirectoryView(QWidget *parent) : AbstractTree(parent), m_model(nullptr), m_fileView(nullptr),
-    m_enqueueAction(nullptr), m_playAction(nullptr), m_rescanAction(nullptr), m_informationAction(nullptr) {
+DirectoryView::DirectoryView(QWidget *parent) : AbstractTree(parent),
+                                                m_model(nullptr), m_fileView(nullptr),
+                                                m_enqueueAction(nullptr), m_playAction(nullptr),
+                                                m_rescanAction(nullptr), m_informationAction(nullptr) {
 	Q_ASSERT(m_menu);
 	setObjectName("directoryview");
     m_model = new DirectoryModel(this);

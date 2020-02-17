@@ -24,7 +24,7 @@
 #include "config.h"
 #include <QMenu>
 
-MPDSongView::MPDSongView(QWidget *parent) : AbstractTree(parent), m_model(0) {
+MPDSongView::MPDSongView(QWidget *parent) : AbstractTree(parent), m_model(nullptr) {
 	Q_ASSERT(m_menu);
 	m_enqueueAction = addMenuAction("enqueue", this, SLOT(enqueue()));
 	m_playAction = addMenuAction("play", this, SLOT(play()));

@@ -26,7 +26,7 @@
 #include "songview.h"
 #include "stringlistmodel.h"
 
-AlbumView::AlbumView(QWidget *parent) : StringListView(parent), m_artistView(0), m_songView(0) {
+AlbumView::AlbumView(QWidget *parent) : StringListView(parent), m_artistView(nullptr), m_songView(nullptr) {
 	Q_ASSERT(m_model);
 	setObjectName("albumview");
 	m_model->setShowAll(true);
