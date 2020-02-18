@@ -107,6 +107,14 @@ TrayIcon::TrayIcon(QWidget *parent) : QSystemTrayIcon(parent),
 	m_quitAction->setObjectName("quitAction");
 	m_volumeMenu->setObjectName("volumeMenu");
 
+	m_prevAction->setIcon(QIcon::fromTheme(QString::fromUtf8("media-skip-backward")));
+	m_playAction->setIcon(QIcon::fromTheme(QString::fromUtf8("media-playback-start")));
+	m_pauseAction->setIcon(QIcon::fromTheme(QString::fromUtf8("media-playback-pause")));
+	m_stopAction->setIcon(QIcon::fromTheme(QString::fromUtf8("media-playback-stop")));
+	m_nextAction->setIcon(QIcon::fromTheme(QString::fromUtf8("media-skip-forward")));
+	m_quitAction->setIcon(QIcon::fromTheme(QString::fromUtf8("window-close")));
+	m_volumeMenu->setIcon(QIcon::fromTheme(QString::fromUtf8("player-volume")));
+
 	connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(action(QSystemTrayIcon::ActivationReason)));
 	connect(menu, SIGNAL(aboutToShow()), this, SLOT(menuAboutToShow()));
 	connect(MPD::instance(), SIGNAL(playingSongUpdated(const MPDSong &)), this, SLOT(setSong(const MPDSong &)));

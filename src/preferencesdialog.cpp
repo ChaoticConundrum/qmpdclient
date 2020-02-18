@@ -612,21 +612,21 @@ void PreferencesDialog::on_upButton_clicked() {
 }
 
 void PreferencesDialog::updateIconSet() {
-	d->connectionItem->setIcon(0, IconManager::icon("connect"));
+	d->connectionItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("network-connect")));
 	if (d->serverItem)
-		d->serverItem->setIcon(0, IconManager::icon("server"));
-	d->looknfeelItem->setIcon(0, IconManager::icon("lookandfeel"));
-	d->libraryItem->setIcon(0, IconManager::icon("library"));
-	d->directoriesItem->setIcon(0, IconManager::icon("directories"));
-	d->playlistItem->setIcon(0, IconManager::icon("playlist"));
-	d->coverArtItem->setIcon(0, IconManager::icon("coverart"));
-	d->iconsItem->setIcon(0, IconManager::icon("icons"));
-	d->stylesItem->setIcon(0, IconManager::icon("styles"));
-	d->localeItem->setIcon(0, IconManager::icon("language"));
-	d->dynamicPlaylistItem->setIcon(0, IconManager::icon("dynamicplaylist"));
-	d->notificationsItem->setIcon(0, IconManager::icon("notifications"));
-	d->shortcutsItem->setIcon(0, IconManager::icon("shortcuts"));
-	d->tagguesserItem->setIcon(0, IconManager::icon("tagguesser"));
+		d->serverItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("server-database")));
+	d->looknfeelItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("settings-configure")));
+	d->libraryItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("emblem-music-symbolic")));
+	d->directoriesItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("library-music")));
+	d->playlistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("network-connect")));
+	d->coverArtItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
+	d->iconsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-list-icons")));
+	d->stylesItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("settings-configure")));
+	d->localeItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("languages")));
+	d->dynamicPlaylistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-refresh")));
+	d->notificationsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("notifications")));
+	d->shortcutsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("configure-shortcuts")));
+	d->tagguesserItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("question")));
 }
 
 void PreferencesDialog::iconsetChanged(QListWidgetItem *i) {

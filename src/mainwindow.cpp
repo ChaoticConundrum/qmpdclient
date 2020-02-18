@@ -79,6 +79,12 @@ MainWindow::MainWindow() : QMainWindow(0) {
 	m_directoriesTab->setObjectName("directoriesTab");
 	m_shoutcastTab->setObjectName("shoutcastTab");
 
+	m_radioTab->setIcon(QIcon::fromTheme(QString::fromUtf8("audio-radio")));
+	m_libraryTab->setIcon(QIcon::fromTheme(QString::fromUtf8("emblem-music-symbolic")));
+	m_playlistTab->setIcon(QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
+	m_playlistsTab->setIcon(QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
+	m_directoriesTab->setIcon(QIcon::fromTheme(QString::fromUtf8("library-music")));
+
 	// Signals and slots
 	connect(MPDConnection::instance(), SIGNAL(connected(const ServerInfo &)), this, SLOT(connectionChanged()));
 	connect(MPDConnection::instance(), SIGNAL(disconnected(const QString &)), this, SLOT(connectionChanged()));
