@@ -24,43 +24,9 @@
 #include <QIcon>
 
 QMap<QString, QString> IconManager::actionIconMap;
-QString IconManager::descriptionString;
 
 void IconManager::update() {
 	actionIconMap.clear();
-	QString path = Config::instance()->iconSetPath();
-	QString confFile = path + "/iconset.conf";
-	if (!QFile::exists(confFile)) {
-		qWarning("Could not find 'iconset.conf' in iconset %s", qPrintable(path));
-		return;
-	}
-
-	// Read action filenames
-	QSettings conf(confFile, QSettings::IniFormat);
-	conf.beginGroup("Icons");
-	foreach(QString key, conf.allKeys()) {
-		QString value = conf.value(key).toString();
-		if (value.isEmpty())
-			continue;
-		actionIconMap.insert(key, path + "/" + value);
-	}
-	conf.endGroup();
-
-	// Read description
-	conf.beginGroup("Iconset");
-	QString title = conf.value("Name").toString();
-	QString desc = conf.value("Description").toString();
-	conf.endGroup();
-	if (title.isEmpty())
-		title = QFileInfo(path).baseName();
-
-	descriptionString = "<b>" + title + "</b>";
-	if (!desc.isEmpty())
-		descriptionString += "<br>" + desc;
-}
-
-QString IconManager::description() {
-	return descriptionString;
 }
 
 QString IconManager::filename(const QString &action) {

@@ -279,21 +279,6 @@ bool Config::autoResizeColumns() const {
 	return value("/looknfeel/autoresizecolumns", true).toBool();
 }
 
-// Icon set
-void Config::setIconSet(const QString &dir) {
-	const QString orig = iconSetPath();
-	setValue("/looknfeel/iconset", dir);
-	if (orig != dir) {
-		IconManager::update();
-		emit iconSetChanged();
-	}
-}
-
-QString Config::iconSetPath() const {
-	QString path = value("/looknfeel/iconset", ":/icons/crystal_amarok").toString();
-	return path;
-}
-
 // Playlist
 void Config::setPlaylistPattern(const QString &p) {
 	const QString orig = playlistPattern();

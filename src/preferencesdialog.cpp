@@ -18,7 +18,6 @@
  */
 
 #include "config.h"
-#include "iconmanager.h"
 #include "mpd.h"
 #include "mpdconnection.h"
 #include "mpdoutput.h"
@@ -47,7 +46,7 @@ struct PreferencesDialogPrivate {
 
 	QTreeWidgetItem *connectionItem, *serverItem, *looknfeelItem;
 	QTreeWidgetItem *directoriesItem, *libraryItem, *playlistItem;
-	QTreeWidgetItem *iconsItem, *localeItem, *dynamicPlaylistItem;
+	QTreeWidgetItem *localeItem, *dynamicPlaylistItem;
 	QTreeWidgetItem *shortcutsItem, *stylesItem, *notificationsItem;
 	QTreeWidgetItem *tagguesserItem, *trayIconItem, *coverArtItem;
 	QTreeWidgetItem *lastFmItem;
@@ -67,7 +66,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), d(new P
 	initConnectionPage();
 	initServerPage();
 	initLookAndFeelPage();
-	initIconSetPage();
 	initLibraryPage();
 	initDirectoriesPage();
 	initPlaylistPage();
@@ -106,7 +104,6 @@ void PreferencesDialog::initCategoryList() {
 	d->libraryItem = new QTreeWidgetItem(d->looknfeelItem);
 	d->directoriesItem = new QTreeWidgetItem(d->looknfeelItem);
 	d->playlistItem = new QTreeWidgetItem(d->looknfeelItem);
-	d->iconsItem = new QTreeWidgetItem(d->looknfeelItem);
 	d->stylesItem = new QTreeWidgetItem(d->looknfeelItem);
 	d->coverArtItem = new QTreeWidgetItem(categoryList);
 	d->dynamicPlaylistItem = new QTreeWidgetItem(categoryList);
@@ -118,6 +115,8 @@ void PreferencesDialog::initCategoryList() {
 	d->trayIconItem->setIcon(0, QIcon(":/icons/16x16/qmpdclient.png"));
 	d->lastFmItem = new QTreeWidgetItem(categoryList);
 	d->lastFmItem->setIcon(0, QIcon(":/icons/as.png"));
+
+	updateIconSet();
 
 	// Make item-index relations
 	for (int i = 0, index = 0; i < categoryList->topLevelItemCount(); i++, index++) {
@@ -192,46 +191,6 @@ void PreferencesDialog::initLookAndFeelPage() {
 	connect(opaqueCheck, SIGNAL(toggled(bool)), Config::instance(), SLOT(setOpaqueResize(bool)));
 	connect(disregardTheCheck, SIGNAL(toggled(bool)), Config::instance(), SLOT(setDisregardLeadingThe(bool)));
         connect(transientSettingsCheck, SIGNAL(toggled(bool)), Config::instance(), SLOT(setSaveTransientSettings(bool)));
-}
-
-void PreferencesDialog::initIconSetPage() {
-	updateIconSet();
-
-	QDir resourceDir(":/icons");
-	QDir systemDir(Config::instance()->systemPath() + "iconsets");
-	QDir localDir(Config::instance()->userPath() + "iconsets");
-	QFileInfoList icons;
-	if (resourceDir.exists())
-		icons << resourceDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
-	if (systemDir.exists())
-		icons << systemDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
-	if (localDir.exists())
-		icons << localDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::IgnoreCase);
-
-	QString iconSetPath = Config::instance()->iconSetPath();
-	QListWidgetItem *selected = 0;
-
-	foreach(QFileInfo fi, icons) {
-		QString confFileName = fi.absoluteFilePath() + "/iconset.conf";
-		if (!QFile::exists(confFileName))
-			continue;
-
-		QSettings conf(confFileName, QSettings::IniFormat);
-		QString title = conf.value("/Iconset/Name").toString();
-		if (title.isEmpty())
-			title = fi.baseName();
-
-		QListWidgetItem *item = new QListWidgetItem(title, iconList);
-		item->setData(Qt::UserRole, fi.absoluteFilePath());
-		if (fi.absoluteFilePath() == iconSetPath)
-			selected = item;
-	}
-	if (selected) {
-		iconList->setCurrentItem(selected);
-		iconLabel->setText(IconManager::description());
-	}
-
-	connect(iconList, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(iconsetChanged(QListWidgetItem *)));
 }
 
 void PreferencesDialog::initLibraryPage() {
@@ -329,7 +288,6 @@ void PreferencesDialog::initLanguagePage() {
 
 	if (selected) {
 		localeList->setCurrentItem(selected);
-		iconLabel->setText(IconManager::description());
 	}
 
 	connect(translationCheck, SIGNAL(toggled(bool)), Config::instance(), SLOT(setTranslate(bool)));
@@ -460,7 +418,6 @@ void PreferencesDialog::updateTranslation() {
 	Q_ASSERT(d->libraryItem);
 	Q_ASSERT(d->directoriesItem);
 	Q_ASSERT(d->playlistItem);
-	Q_ASSERT(d->iconsItem);
 	Q_ASSERT(d->localeItem);
 	Q_ASSERT(d->dynamicPlaylistItem);
 	Q_ASSERT(d->notificationsItem);
@@ -473,7 +430,6 @@ void PreferencesDialog::updateTranslation() {
 	d->libraryItem->setText(0, tr("Library"));
 	d->directoriesItem->setText(0, tr("Directories"));
 	d->playlistItem->setText(0, tr("Playlist"));
-	d->iconsItem->setText(0, tr("Icons"));
 	d->coverArtItem->setText(0, tr("Cover art"));
 	d->localeItem->setText(0, tr("Language"));
 	d->dynamicPlaylistItem->setText(0, tr("Dynamic playlist"));
@@ -620,21 +576,12 @@ void PreferencesDialog::updateIconSet() {
 	d->directoriesItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("library-music")));
 	d->playlistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("network-connect")));
 	d->coverArtItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
-	d->iconsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-list-icons")));
 	d->stylesItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("settings-configure")));
 	d->localeItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("languages")));
 	d->dynamicPlaylistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-refresh")));
 	d->notificationsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("notifications")));
 	d->shortcutsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("configure-shortcuts")));
 	d->tagguesserItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("question")));
-}
-
-void PreferencesDialog::iconsetChanged(QListWidgetItem *i) {
-	if (!i)
-		return;
-	Config::instance()->setIconSet(i->data(Qt::UserRole).toString());
-	updateIconSet();
-	iconLabel->setText(IconManager::description());
 }
 
 void PreferencesDialog::localeChanged(QListWidgetItem *i) {

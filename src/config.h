@@ -54,7 +54,6 @@ public:
 	bool showRemaining() const;
 
 	// Look and feel subpages
-	QString iconSetPath() const;
 	bool filterByAlbumOnly() const;
 	bool disregardLeadingThe() const;
 	QString playlistPattern() const;
@@ -155,7 +154,6 @@ public slots:
 
 	// Look and feel subpages
 	void setFilterByAlbumOnly(bool);
-	void setIconSet(const QString &);
 	void setPlaylistPattern(const QString &);
 	void setDisregardLeadingThe(bool);
 	void setScrollToPlaying(bool);

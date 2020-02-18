@@ -27,7 +27,6 @@ class QPixmap;
 class IconManager {
 public:
 	static void update();
-	static QString description();
 	static QIcon icon(const QString &, int size = 16);
 	static QPixmap pixmap(const QString &, int size = 16);
 
