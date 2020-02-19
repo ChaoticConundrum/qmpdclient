@@ -20,11 +20,20 @@
 #include "config.h"
 #include "debug.h"
 #include "notifications.h"
-#include "passivepopup.h"
 #include "richtext.h"
+#include "mpd.h"
+
 #include "coverartdialog.h"
 #include <QApplication>
 #include <QDesktopWidget>
+
+Notifications::Notifications(TrayIcon *trayIcon, QObject *parent)
+	: QObject(parent),
+	  m_coverArt(new CoverArtDialog(nullptr)),
+	  trayIcon(trayIcon), notifyIcon(":/icons/64x64/qmpdclient.png") {
+	setObjectName("notifications");
+	connect(MPD::instance(), SIGNAL(playingSongUpdated(const MPDSong &)), this, SLOT(setSong(const MPDSong &)));
+}
 
 QString Notifications::name(Type t) {
 	switch (t) {
@@ -48,29 +57,9 @@ QString Notifications::makeTitle(const MPDSong &s) {
 	return title;
 }
 
-/*
 void Notifications::notify(const QString &text) {
-	if (Config::instance()->notifier() == FREEDESKTOP && m_dbus) {
-		m_dbus = notifyDBus(text);
-		if (m_dbus) // DBus notify succeeded
-			return;
-		DEBUG("DBus notify failed, falling back to custom notifier.");
-	}
-
-	// TODO: height and width set optionaly
-	QPixmap icon;
-	if (Config::instance()->showCoverArt() && m_coverArt->hasCoverArt()) {
-		icon = m_coverArt->coverArt();
-		if (icon.height() > 64) icon = icon.scaledToHeight(64, Qt::SmoothTransformation);
-		if (icon.width() > 64) icon = icon.scaledToWidth(64, Qt::SmoothTransformation);
-	} else {
-		icon = QPixmap(":/icons/48x48/qmpdclient.png");
-	}
-
-	PassivePopup::Position pos = static_cast<PassivePopup::Position>(Config::instance()->notificationsPosition());
-	new PassivePopup("QMPDClient", text, icon, pos, Config::instance()->notificationsTimeout());
+	trayIcon->showMessage(qApp->applicationName(), text, notifyIcon, Config::instance()->notificationsTimeout()*1000);
 }
- */
 
 void Notifications::setSong(const MPDSong &s) {
 	if (m_previousSong.isNull() || m_previousSong == s || !Config::instance()->notificationsEnabled() || Config::instance()->notificationsTimeout() < 1) {
@@ -83,4 +72,9 @@ void Notifications::setSong(const MPDSong &s) {
 		notify(makeTitle(s));
 	}
 	m_previousSong = s;
+}
+
+QList<Notifications::Type> Notifications::notifiers()
+{
+	return QList<Type>() << FREEDESKTOP;
 }

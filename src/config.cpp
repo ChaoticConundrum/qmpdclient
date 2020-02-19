@@ -21,12 +21,14 @@
 #include "debug.h"
 #include "iconmanager.h"
 #include "mpdsonglist.h"
-#include "passivepopup.h"
 #include "serverinfo.h"
+
 #include <QDir>
 #include <QFile>
 #include <QLocale>
 #include <QCoreApplication>
+#include <QVariant>
+#include <QFrame>
 
 Config* Config::m_instance = 0;
 
@@ -421,7 +423,7 @@ bool Config::notificationsEnabled() const {
 }
 
 int Config::notificationsPosition() const {
-	return value("/notifications/position", PassivePopup::BottomRight).toInt();
+	return value("/notifications/position", 0).toInt();
 }
 
 int Config::notificationsTimeout() const {

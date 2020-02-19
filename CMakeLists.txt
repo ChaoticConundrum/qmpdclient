@@ -71,7 +71,6 @@ set(QMPDClient_srcs
 	src/mpdstats.cpp
 	src/mpdstatus.cpp
 	src/notifications.cpp
-	src/passivepopup.cpp
 	src/pausabletimer.cpp
 	src/playlistitemdelegate.cpp
 	src/playlistmodel.cpp
@@ -105,12 +104,6 @@ set(QMPDClient_srcs
 	src/trayicon.cpp
 	src/traysonginfo.cpp
 	src/verticalbutton.cpp
-
-	#    src/qmpdclient_mac.cpp
-	#    src/qmpdclient_win.cpp
-	#    src/qmpdclient_x11.cpp
-	#    src/notifications_dbus.cpp
-	#    src/notifications_nodbus.cpp
 
 	src/aafilter.h
 	src/aboutdialog.h
@@ -157,7 +150,6 @@ set(QMPDClient_srcs
 	src/mpdstats.h
 	src/mpdstatus.h
 	src/notifications.h
-	src/passivepopup.h
 	src/pausabletimer.h
 	src/playlistitemdelegate.h
 	src/playlistmodel.h
@@ -286,33 +278,14 @@ target_compile_definitions(qmpdclient PRIVATE
 
 if(WIN32)
 	target_sources(qmpdclient PRIVATE
-		src/notifications_nodbus.cpp
-		src/qmpdclient_win.cpp icons/resource.rc
+		src/qmpdclient_win.cpp
+		icons/resource.rc
 		)
 elseif(APPLE)
 	target_sources(qmpdclient PRIVATE
-		src/notifications_nodbus.cpp
 		src/qmpdclient_mac.cpp
 		)
 else()
-	if(Qt5DBus_FOUND)
-		message(STATUS "QtDBus found")
-		#        set(QT_USE_QTDBUS TRUE)
-		target_sources(qmpdclient PRIVATE
-			src/notifications_dbus.cpp
-			src/qdbus_adaptor.cpp
-			src/qdbus_adaptor.h
-			)
-		target_compile_definitions(qmpdclient PRIVATE
-			WITH_DBUS
-			)
-	else()
-		message(STATUS "QtDBus not found")
-		target_sources(qmpdclient PRIVATE
-			src/notifications_nodbus.cpp
-			)
-	endif()
-
 	target_sources(qmpdclient PRIVATE
 		src/qmpdclient_x11.cpp
 		)

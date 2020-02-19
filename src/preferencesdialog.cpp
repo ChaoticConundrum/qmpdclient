@@ -24,7 +24,6 @@
 #include "mpdoutput.h"
 #include "mpdsong.h"
 #include "notifications.h"
-#include "passivepopup.h"
 #include "preferencesdialog.h"
 #include "serverinfo.h"
 #include "servermodel.h"
@@ -349,26 +348,6 @@ void PreferencesDialog::initDynamicPlaylistPage() {
 }
 
 void PreferencesDialog::initNotificationsPage() {
-	PassivePopup::Position pos = static_cast<PassivePopup::Position>(Config::instance()->notificationsPosition());
-	d->positionGroup = new QButtonGroup(this);
-	d->positionGroup->addButton(topLeft, PassivePopup::TopLeft);
-	d->positionGroup->addButton(top, PassivePopup::Top);
-	d->positionGroup->addButton(topRight, PassivePopup::TopRight);
-	d->positionGroup->addButton(right, PassivePopup::Right);
-	d->positionGroup->addButton(bottomRight, PassivePopup::BottomRight);
-	d->positionGroup->addButton(bottom, PassivePopup::Bottom);
-	d->positionGroup->addButton(bottomLeft, PassivePopup::BottomLeft);
-	d->positionGroup->addButton(left, PassivePopup::Left);
-
-	topLeft->setChecked(pos == PassivePopup::TopLeft);
-	top->setChecked(pos == PassivePopup::Top);
-	topRight->setChecked(pos == PassivePopup::TopRight);
-	right->setChecked(pos == PassivePopup::Right);
-	bottom->setChecked(pos == PassivePopup::Bottom);
-	bottomLeft->setChecked(pos == PassivePopup::BottomLeft);
-	left->setChecked(pos == PassivePopup::Left);
-	bottomRight->setChecked(pos == PassivePopup::BottomRight);
-
 	notificationsTimeoutSpinner->setValue(Config::instance()->notificationsTimeout());
 	notificationsCheck->setChecked(Config::instance()->notificationsEnabled());
 
@@ -383,7 +362,6 @@ void PreferencesDialog::initNotificationsPage() {
 	connect(notificationCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(notifierChanged(int)));
 	notificationCombo->setCurrentIndex(idx);
 
-	connect(d->positionGroup, SIGNAL(buttonClicked(int)), Config::instance(), SLOT(setNotificationsPosition(int)));
 	connect(notificationsCheck, SIGNAL(toggled(bool)), Config::instance(), SLOT(setNotificationsEnabled(bool)));
 	connect(notificationsTimeoutSpinner, SIGNAL(valueChanged(int)), Config::instance(), SLOT(setNotificationsTimeout(int)));
 }
@@ -646,8 +624,6 @@ void PreferencesDialog::notifierChanged(int index) {
 	int type = notificationCombo->itemData(index).toInt();
 	Config::instance()->setNotifier(type);
 	const bool enable = type == Notifications::CUSTOM;
-	desktopLabel->setEnabled(enable);
-	posLabel->setEnabled(enable);
 	foreach(QAbstractButton *b, d->positionGroup->buttons()) {
 		b->setEnabled(enable);
 	}

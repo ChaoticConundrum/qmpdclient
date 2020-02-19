@@ -53,6 +53,7 @@ private:
 	MPDSong m_previousSong;
 	CoverArtDialog *m_coverArt;
 	TrayIcon *trayIcon;
+	QIcon notifyIcon;
 };
 
 #endif
