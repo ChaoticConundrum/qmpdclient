@@ -209,7 +209,6 @@ signals:
 	void autoResizeChanged(bool);
 	void filterByAlbumOnlyChanged(bool);
 	void fontChanged(const QFont &);
-	void iconSetChanged();
 	void localeChanged(const QString &);
 	void opaqueResizeChanged(bool);
 	void playlistPatternChanged(const QString &);

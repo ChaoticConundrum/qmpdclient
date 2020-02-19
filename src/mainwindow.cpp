@@ -20,7 +20,6 @@
 #include "aboutdialog.h"
 #include "config.h"
 #include "directorypanel.h"
-#include "iconmanager.h"
 #include "librarypanel.h"
 #include "mainwindow.h"
 #include "mpd.h"
@@ -79,11 +78,12 @@ MainWindow::MainWindow() : QMainWindow(0) {
 	m_directoriesTab->setObjectName("directoriesTab");
 	m_shoutcastTab->setObjectName("shoutcastTab");
 
-	m_radioTab->setIcon(QIcon::fromTheme(QString::fromUtf8("audio-radio")));
-	m_libraryTab->setIcon(QIcon::fromTheme(QString::fromUtf8("emblem-music-symbolic")));
-	m_playlistTab->setIcon(QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
-	m_playlistsTab->setIcon(QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
-	m_directoriesTab->setIcon(QIcon::fromTheme(QString::fromUtf8("library-music")));
+	m_radioTab->setIcon(QIcon::fromTheme("audio-radio"));
+	m_libraryTab->setIcon(QIcon::fromTheme("emblem-music-symbolic"));
+	m_playlistTab->setIcon(QIcon::fromTheme("text-x-generic"));
+	m_playlistsTab->setIcon(QIcon::fromTheme("text-x-generic"));
+	m_directoriesTab->setIcon(QIcon::fromTheme("folder"));
+	m_shoutcastTab->setIcon(QIcon::fromTheme("audio-input-microphone"));
 
 	// Signals and slots
 	connect(MPDConnection::instance(), SIGNAL(connected(const ServerInfo &)), this, SLOT(connectionChanged()));
@@ -207,7 +207,7 @@ void MainWindow::serverListChanged(const QList<ServerInfo> &sil) {
 	while (!m_actions.isEmpty())
 		delete m_actions.takeLast();
 	foreach(ServerInfo si, sil) {
-		QAction *a = connectMenu->addAction(IconManager::icon("server"), si.name(), this, SLOT(connectToMPD()));
+		QAction *a = connectMenu->addAction(QIcon::fromTheme(QString::fromUtf8("network-server")), si.name(), this, SLOT(connectToMPD()));
 		if (m_actions.isEmpty()) {
 			a->setParent(this);
 			a->setObjectName("connectMenu");

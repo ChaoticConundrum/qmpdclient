@@ -20,7 +20,6 @@
 #include "config.h"
 #include "debug.h"
 #include "dynamicplaylist.h"
-#include "iconmanager.h"
 #include "mainwindow.h"
 #include "mpd.h"
 #include "mpdconnection.h"
@@ -54,7 +53,6 @@ QMPDClient::QMPDClient(int &argc, char **argv) : QApplication(argc, argv),
 	m_mainWindow = new MainWindow;
 	alternatingChanged(Config::instance()->alternatingRowColors());
 	fontChanged(Config::instance()->font());
-	iconSetChanged();
 	localeChanged(Config::instance()->localeFile()); // Retranslate dynamic parts
 	opaqueResizeChanged(Config::instance()->opaqueResize());
 	setStyleSheet(Config::instance()->style());
@@ -62,7 +60,6 @@ QMPDClient::QMPDClient(int &argc, char **argv) : QApplication(argc, argv),
 
 	connect(Config::instance(), SIGNAL(alternatingChanged(bool)), this, SLOT(alternatingChanged(bool)));
 	connect(Config::instance(), SIGNAL(fontChanged(const QFont &)), this, SLOT(fontChanged(const QFont &)));
-	connect(Config::instance(), SIGNAL(iconSetChanged()), this, SLOT(iconSetChanged()));
 	connect(Config::instance(), SIGNAL(localeChanged(const QString &)), this, SLOT(localeChanged(const QString &)));
 	connect(Config::instance(), SIGNAL(opaqueResizeChanged(bool)), this, SLOT(opaqueResizeChanged(bool)));
 	connect(Config::instance(), SIGNAL(styleChanged(const QString &)), this, SLOT(setStyleSheet(const QString &)));
@@ -107,41 +104,6 @@ void QMPDClient::fontChanged(const QFont &font) {
 	Q_ASSERT(m_mainWindow);
 	setFont(font);
 	m_mainWindow->setFont(font);
-}
-
-void QMPDClient::iconSetChanged() {
-	foreach(QPointer<QObject> child, safeChildren()) {
-		if (!child || child->objectName().isEmpty())
-			continue;
-		const bool icon = child->metaObject()->indexOfProperty("icon") > -1;
-		const bool pixmap = child->metaObject()->indexOfProperty("pixmap") > -1;
-		if (icon || pixmap) {
-			QString name = child->objectName();
-			name.remove(QRegExp("^m_"));
-			name.remove(QRegExp("Button$"));
-			name.remove(QRegExp("Action$"));
-			name.remove(QRegExp("Menu$"));
-			name.remove(QRegExp("Tab$"));
-			name.remove(QRegExp("Item$"));
-			name.remove(QRegExp("Label$"));
-			name = name.toLower();
-			if (icon) {
-				QIcon icn = IconManager::icon(name);
-				if (icn.isNull())
-					continue;
-				if (!child->setProperty("icon", icn)) {
-					qWarning("Could not set icon for %s", qPrintable(child->objectName()));
-				}
-			} else if (pixmap) {
-				QPixmap pix = IconManager::pixmap(name);
-				if (pix.isNull())
-					continue;
-				if (!child->setProperty("pixmap", pix)) {
-					qWarning("Could not set pixmap for %s", qPrintable(child->objectName()));
-				}
-			}
-		}
-	}
 }
 
 void QMPDClient::localeChanged(const QString &locale) {

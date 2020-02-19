@@ -19,7 +19,6 @@
 
 #include "config.h"
 #include "debug.h"
-#include "iconmanager.h"
 #include "mpdsonglist.h"
 #include "passivepopup.h"
 #include "serverinfo.h"
@@ -55,7 +54,6 @@ Config::Config() :
 Config *Config::instance() {
 	if (!m_instance) {
 		m_instance = new Config;
-		IconManager::update();
 	}
 	return m_instance;
 }

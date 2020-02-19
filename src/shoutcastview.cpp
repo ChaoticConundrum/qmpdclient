@@ -19,7 +19,6 @@
 
 #include "config.h"
 #include "shoutcastmodel.h"
-#include "iconmanager.h"
 #include "shoutcastview.h"
 #include "shoutcaststation.h"
 #include "mpdsonglist.h"

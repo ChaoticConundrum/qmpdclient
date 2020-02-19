@@ -535,19 +535,19 @@ void PreferencesDialog::on_upButton_clicked() {
 }
 
 void PreferencesDialog::updateIconSet() {
-	d->connectionItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("network-connect")));
+	d->connectionItem->setIcon(0, QIcon::fromTheme("network-connect"));
 	if (d->serverItem)
-		d->serverItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("server-database")));
-	d->looknfeelItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("settings-configure")));
-	d->libraryItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("emblem-music-symbolic")));
-	d->directoriesItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("library-music")));
-	d->playlistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("network-connect")));
-	d->coverArtItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
-	d->localeItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("languages")));
-	d->dynamicPlaylistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-refresh")));
-	d->notificationsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("notifications")));
-	d->shortcutsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("configure-shortcuts")));
-	d->tagguesserItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("question")));
+		d->serverItem->setIcon(0, QIcon::fromTheme("server-database"));
+	d->looknfeelItem->setIcon(0, QIcon::fromTheme("settings-configure"));
+	d->libraryItem->setIcon(0, QIcon::fromTheme("emblem-music-symbolic"));
+	d->directoriesItem->setIcon(0, QIcon::fromTheme("folder"));
+	d->playlistItem->setIcon(0, QIcon::fromTheme("network-connect"));
+	d->coverArtItem->setIcon(0, QIcon::fromTheme("view-media-playlist"));
+	d->localeItem->setIcon(0, QIcon::fromTheme("languages"));
+	d->dynamicPlaylistItem->setIcon(0, QIcon::fromTheme("view-refresh"));
+	d->notificationsItem->setIcon(0, QIcon::fromTheme("notifications"));
+	d->shortcutsItem->setIcon(0, QIcon::fromTheme("configure-shortcuts"));
+	d->tagguesserItem->setIcon(0, QIcon::fromTheme("question"));
 }
 
 void PreferencesDialog::localeChanged(QListWidgetItem *i) {

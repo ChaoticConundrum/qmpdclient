@@ -21,7 +21,6 @@
 #include "directorymodel.h"
 #include "directoryview.h"
 #include "fileview.h"
-#include "iconmanager.h"
 #include "mpdcache.h"
 #include "mpddirectory.h"
 #include "mpdsonglist.h"

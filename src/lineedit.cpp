@@ -19,18 +19,17 @@
 
 #include "lineedit.h"
 #include "config.h"
-#include "iconmanager.h"
 #include <QMouseEvent>
 #include <QPainter>
 #include <QBitmap>
+#include <QIcon>
 
 LineEdit::LineEdit(QWidget *parent) : QLineEdit(parent), m_hover(false), m_forceNoHover(false) {
 	updateIconSet();
-	connect(Config::instance(), SIGNAL(iconSetChanged()), this, SLOT(updateIconSet()));
 }
 
 void LineEdit::updateIconSet() {
-	m_pixmap = m_hoverPixmap = IconManager::pixmap("clearline");
+	m_pixmap = m_hoverPixmap = QIcon::fromTheme("edit-clear").pixmap(16);
 	if (m_pixmap.isNull())
 		return;
 
