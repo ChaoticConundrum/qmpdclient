@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow {
 
 public:
 	MainWindow();
+	TrayIcon *getTrayIcon(){ return m_trayIcon; }
 
 public slots:
 	void showHide();

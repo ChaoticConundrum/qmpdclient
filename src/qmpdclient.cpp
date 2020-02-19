@@ -69,7 +69,7 @@ QMPDClient::QMPDClient(int &argc, char **argv) : QApplication(argc, argv),
 
 	// Services
 	new DynamicPlaylist(this);
-	new Notifications(this);
+	new Notifications(m_mainWindow->getTrayIcon(), this);
 	new Reconnect(this);
 	new Shortcuts(m_mainWindow);
 	grabKeys();

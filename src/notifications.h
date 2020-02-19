@@ -22,19 +22,19 @@
 
 #include "coverartdialog.h"
 #include "mpdsong.h"
+#include "trayicon.h"
 
 #include <QObject>
 
 class QDBusInterface;
 class CoverArtDialog;
 
-class Notifications
-	: public QObject
+class Notifications : public QObject
 {
 	Q_OBJECT
 
 public:
-	Notifications(QObject *);
+	Notifications(TrayIcon *trayIcon, QObject *parent);
 	enum Type { CUSTOM = 0, FREEDESKTOP = 1 };
 	static QList<Type> notifiers();
 	static QString name(Type);
@@ -52,6 +52,7 @@ private:
 	QDBusInterface *m_interface;
 	MPDSong m_previousSong;
 	CoverArtDialog *m_coverArt;
+	TrayIcon *trayIcon;
 };
 
 #endif

@@ -48,6 +48,7 @@ QString Notifications::makeTitle(const MPDSong &s) {
 	return title;
 }
 
+/*
 void Notifications::notify(const QString &text) {
 	if (Config::instance()->notifier() == FREEDESKTOP && m_dbus) {
 		m_dbus = notifyDBus(text);
@@ -69,6 +70,7 @@ void Notifications::notify(const QString &text) {
 	PassivePopup::Position pos = static_cast<PassivePopup::Position>(Config::instance()->notificationsPosition());
 	new PassivePopup("QMPDClient", text, icon, pos, Config::instance()->notificationsTimeout());
 }
+ */
 
 void Notifications::setSong(const MPDSong &s) {
 	if (m_previousSong.isNull() || m_previousSong == s || !Config::instance()->notificationsEnabled() || Config::instance()->notificationsTimeout() < 1) {

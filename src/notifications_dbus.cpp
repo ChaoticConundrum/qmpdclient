@@ -26,13 +26,18 @@
 #include <QDBusReply>
 #include <QStringList>
 
-Notifications::Notifications(QObject *parent)
-	: QObject(parent),
+Notifications::Notifications(TrayIcon *trayIcon, QObject *parent)
+	: trayIcon(trayIcon), QObject(parent),
 	m_dbus(true),
 	m_interface(new QDBusInterface("org.freedesktop.Notifications", "/org/freedesktop/Notifications")),
 	m_coverArt(new CoverArtDialog(0)) {
 	setObjectName("notifications");
 	connect(MPD::instance(), SIGNAL(playingSongUpdated(const MPDSong &)), this, SLOT(setSong(const MPDSong &)));
+}
+
+void Notifications::notify(const QString &text) {
+	// TODO: Show qmpdclient icon on notification
+	trayIcon->showMessage(qApp->applicationName(), text, QSystemTrayIcon::Information, Config::instance()->notificationsTimeout()*1000);
 }
 
 bool Notifications::notifyDBus(const QString &text) {
