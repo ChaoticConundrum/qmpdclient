@@ -935,35 +935,6 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="stylesPage">
-          <layout class="QVBoxLayout">
-           <property name="spacing">
-            <number>6</number>
-           </property>
-           <property name="leftMargin">
-            <number>9</number>
-           </property>
-           <property name="topMargin">
-            <number>9</number>
-           </property>
-           <property name="rightMargin">
-            <number>9</number>
-           </property>
-           <property name="bottomMargin">
-            <number>9</number>
-           </property>
-           <item>
-            <widget class="QListWidget" name="styleList">
-             <property name="uniformItemSizes">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="styleLabel"/>
-           </item>
-          </layout>
-         </widget>
          <widget class="QWidget" name="coverArtPage">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>

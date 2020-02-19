@@ -47,7 +47,7 @@ struct PreferencesDialogPrivate {
 	QTreeWidgetItem *connectionItem, *serverItem, *looknfeelItem;
 	QTreeWidgetItem *directoriesItem, *libraryItem, *playlistItem;
 	QTreeWidgetItem *localeItem, *dynamicPlaylistItem;
-	QTreeWidgetItem *shortcutsItem, *stylesItem, *notificationsItem;
+	QTreeWidgetItem *shortcutsItem, *notificationsItem;
 	QTreeWidgetItem *tagguesserItem, *trayIconItem, *coverArtItem;
 	QTreeWidgetItem *lastFmItem;
 };
@@ -69,7 +69,6 @@ PreferencesDialog::PreferencesDialog(QWidget *parent) : QDialog(parent), d(new P
 	initLibraryPage();
 	initDirectoriesPage();
 	initPlaylistPage();
-	initStylePage();
 	initCoverArtPage();
 	initDynamicPlaylistPage();
 	initLanguagePage();
@@ -104,7 +103,6 @@ void PreferencesDialog::initCategoryList() {
 	d->libraryItem = new QTreeWidgetItem(d->looknfeelItem);
 	d->directoriesItem = new QTreeWidgetItem(d->looknfeelItem);
 	d->playlistItem = new QTreeWidgetItem(d->looknfeelItem);
-	d->stylesItem = new QTreeWidgetItem(d->looknfeelItem);
 	d->coverArtItem = new QTreeWidgetItem(categoryList);
 	d->dynamicPlaylistItem = new QTreeWidgetItem(categoryList);
 	d->localeItem = new QTreeWidgetItem(categoryList);
@@ -217,33 +215,6 @@ void PreferencesDialog::initPlaylistPage() {
 
 	connect(centerPlayingCheck, SIGNAL(toggled(bool)), Config::instance(), SLOT(setScrollToPlaying(bool)));
 	connect(titleFormatLine, SIGNAL(textChanged(const QString &)), Config::instance(), SLOT(setPlaylistPattern(const QString &)));
-}
-
-void PreferencesDialog::initStylePage() {
-	QDir systemDir(Config::instance()->systemPath() + "styles", "*.css");
-	QDir localDir(Config::instance()->userPath() + "styles", "*.css");
-	QFileInfoList styles;
-	if (systemDir.exists())
-		styles << systemDir.entryInfoList(QDir::Files | QDir::Readable);
-	if (localDir.exists())
-		styles << localDir.entryInfoList(QDir::Files | QDir::Readable);
-
-	QString styleFile = Config::instance()->styleFile();
-	QListWidgetItem *selected = 0;
-
-	QListWidgetItem *defaultStyle = new QListWidgetItem(tr("Default style"), styleList);
-	if (styleFile.isEmpty())
-		selected = defaultStyle;
-	foreach(QFileInfo fi, styles) {
-		QListWidgetItem *item = new QListWidgetItem(fi.baseName(), styleList);
-		item->setData(Qt::UserRole, fi.absoluteFilePath());
-		if (fi.absoluteFilePath() == styleFile)
-			selected = item;
-	}
-	if (selected)
-		styleList->setCurrentItem(selected);
-
-	connect(styleList, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(styleChanged(QListWidgetItem *)));
 }
 
 void PreferencesDialog::initCoverArtPage() {
@@ -451,10 +422,6 @@ void PreferencesDialog::updateTranslation() {
 	titleFormatLabel->setText(help);
 	on_testLine_textChanged(testLine->text());
 
-	Q_ASSERT(d->stylesItem);
-	d->stylesItem->setText(0, tr("Styles"));
-	Q_ASSERT(styleList->count() > 0);
-	styleList->item(0)->setText(tr("Default style"));
 	Q_ASSERT(localeList->count() > 0);
 	localeList->item(0)->setText(tr("Use system locale"));
 }
@@ -576,7 +543,6 @@ void PreferencesDialog::updateIconSet() {
 	d->directoriesItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("library-music")));
 	d->playlistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("network-connect")));
 	d->coverArtItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-media-playlist")));
-	d->stylesItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("settings-configure")));
 	d->localeItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("languages")));
 	d->dynamicPlaylistItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("view-refresh")));
 	d->notificationsItem->setIcon(0, QIcon::fromTheme(QString::fromUtf8("notifications")));
@@ -603,11 +569,6 @@ void PreferencesDialog::notifierChanged(int index) {
 void PreferencesDialog::outputChanged(QTreeWidgetItem *i, int col) {
 	if (i && col == 0)
 		MPD::instance()->toggleOutputDevice(i->type(), i->checkState(0) == Qt::Checked);
-}
-
-void PreferencesDialog::styleChanged(QListWidgetItem *i) {
-	if (i)
-		Config::instance()->setStyleFile(i->data(Qt::UserRole).toString());
 }
 
 void PreferencesDialog::hashLastFmPassword() {

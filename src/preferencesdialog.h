@@ -49,7 +49,6 @@ private slots:
 	void notifierChanged(int);
 	void outputChanged(QTreeWidgetItem *, int);
 	void serverSelectionChanged();
-	void styleChanged(QListWidgetItem *);
 	void hashLastFmPassword();
 	void setLastFmSlider(int);
 	void setLastFmSpiner(int);
@@ -65,7 +64,6 @@ private:
 	void initLibraryPage();
 	void initDirectoriesPage();
 	void initPlaylistPage();
-	void initStylePage();
 	void initShortcutPage();
 	void initLanguagePage();
 	void initDynamicPlaylistPage();
