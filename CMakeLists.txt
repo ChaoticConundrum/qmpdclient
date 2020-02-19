@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 
 project(QMPDClient C CXX)
 
+add_subdirectory(libmpdclient)
+
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets Network Xml XmlPatterns DBus X11Extras)
 
 if(APPLE)
@@ -52,7 +54,7 @@ set(QMPDClient_srcs
 	src/idealbar.cpp
 	src/idealsplitter.cpp
 	src/lastfmsubmitter.cpp
-	src/libmpdclient.c
+#	src/libmpdclient.c
 	src/librarypanel.cpp
 	src/lineedit.cpp
 	src/lyricsdialog.cpp
@@ -135,7 +137,7 @@ set(QMPDClient_srcs
 	src/idealbar.h
 	src/idealsplitter.h
 	src/lastfmsubmitter.h
-	src/libmpdclient.h
+#	src/libmpdclient.h
 	src/librarypanel.h
 	src/lineedit.h
 	src/lyricsdialog.h
@@ -262,6 +264,7 @@ add_executable(qmpdclient
 
 set_target_properties(qmpdclient PROPERTIES AUTORCC ON)
 
+target_link_libraries(qmpdclient mpdclient)
 target_link_libraries(qmpdclient Qt5::Widgets Qt5::Network Qt5::Xml Qt5::XmlPatterns Qt5::DBus Qt5::X11Extras)
 
 if(WIN32)
