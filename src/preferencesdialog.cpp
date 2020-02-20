@@ -542,7 +542,7 @@ void PreferencesDialog::updateIconSet() {
 	d->libraryItem->setIcon(0, QIcon::fromTheme("emblem-music-symbolic"));
 	d->directoriesItem->setIcon(0, QIcon::fromTheme("folder"));
 	d->playlistItem->setIcon(0, QIcon::fromTheme("network-connect"));
-	d->coverArtItem->setIcon(0, QIcon::fromTheme("view-media-playlist"));
+	d->coverArtItem->setIcon(0, QIcon::fromTheme("media-album-cover"));
 	d->localeItem->setIcon(0, QIcon::fromTheme("languages"));
 	d->dynamicPlaylistItem->setIcon(0, QIcon::fromTheme("view-refresh"));
 	d->notificationsItem->setIcon(0, QIcon::fromTheme("notifications"));

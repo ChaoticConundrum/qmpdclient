@@ -80,8 +80,8 @@ MainWindow::MainWindow() : QMainWindow(0) {
 
 	m_radioTab->setIcon(QIcon::fromTheme("audio-radio"));
 	m_libraryTab->setIcon(QIcon::fromTheme("emblem-music-symbolic"));
-	m_playlistTab->setIcon(QIcon::fromTheme("text-x-generic"));
-	m_playlistsTab->setIcon(QIcon::fromTheme("text-x-generic"));
+	m_playlistTab->setIcon(QIcon::fromTheme("view-list-text"));
+	m_playlistsTab->setIcon(QIcon::fromTheme("view-list-text"));
 	m_directoriesTab->setIcon(QIcon::fromTheme("folder"));
 	m_shoutcastTab->setIcon(QIcon::fromTheme("audio-input-microphone"));
 
