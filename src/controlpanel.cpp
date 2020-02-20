@@ -39,7 +39,7 @@ ControlPanel::ControlPanel(QWidget *parent) : QWidget(parent),
 	Q_ASSERT(m_lyricsDialog);
 	Q_ASSERT(m_lastFm);
 	setupUi(this);
-	coverArtButton->setVisible(false);
+	coverArtButton->setVisible(Config::instance()->showCoverArt());
 	updateVolume(-1);
 
 	connect(prevButton, SIGNAL(clicked()), MPD::instance(), SLOT(prev()));
@@ -140,14 +140,14 @@ void ControlPanel::setSong(const MPDSong &s) {
 		m_coverArt->setSong(s);
 		if (m_coverArt->hasCoverArt()) {
 			coverArtButton->setIcon(m_coverArt->coverArt());
-			coverArtButton->setIconSize(QSize(50, 50));
-			coverArtButton->setVisible(true);
-		} else coverArtButton->setVisible(false);
+		} else {
+			coverArtButton->setIcon(QIcon::fromTheme("media-album-cover"));
+		}
 	}
 }
 
 void ControlPanel::showCoverArtChanged(bool a) {
-	coverArtButton->setVisible(a && m_coverArt->hasCoverArt());
+	coverArtButton->setVisible(a);
 }
 
 void ControlPanel::updateVolume(int volume) {
