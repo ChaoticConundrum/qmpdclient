@@ -19,8 +19,9 @@
 
 #include "config.h"
 #include "metainfodialog.h"
-#include "iconmanager.h"
 #include "mpdsonglist.h"
+
+#include <QIcon>
 
 MetaInfoDialog::MetaInfoDialog(QWidget *parent, const MPDSongList &songs)
 	: QDialog(parent),
@@ -40,7 +41,7 @@ MetaInfoDialog::MetaInfoDialog(QWidget *parent, const MPDSongList &songs)
 	connect(okButton, SIGNAL(clicked()), SLOT(accept()));
 	connect(l_coverArt, SIGNAL(clicked()), m_coverArt, SLOT(show()));
 
-	metaInfoDialogLabel->setPixmap(IconManager::pixmap("metainfodialog", 32));
+	metaInfoDialogLabel->setPixmap(QIcon::fromTheme("dialog-information").pixmap(32));
 	nextButton->setEnabled(songs.size() > 1);
 	setSong();
 	resize(minimumSizeHint());

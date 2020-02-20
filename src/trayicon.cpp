@@ -19,7 +19,6 @@
 
 #include "trayicon.h"
 #include "config.h"
-#include "iconmanager.h"
 #include "mpd.h"
 #include "mpdconnection.h"
 #include "mpdsong.h"
@@ -106,6 +105,14 @@ TrayIcon::TrayIcon(QWidget *parent) : QSystemTrayIcon(parent),
 	m_nextAction->setObjectName("nextAction");
 	m_quitAction->setObjectName("quitAction");
 	m_volumeMenu->setObjectName("volumeMenu");
+
+	m_prevAction->setIcon(QIcon::fromTheme("media-skip-backward"));
+	m_playAction->setIcon(QIcon::fromTheme("media-playback-start"));
+	m_pauseAction->setIcon(QIcon::fromTheme("media-playback-pause"));
+	m_stopAction->setIcon(QIcon::fromTheme("media-playback-stop"));
+	m_nextAction->setIcon(QIcon::fromTheme("media-skip-forward"));
+	m_quitAction->setIcon(QIcon::fromTheme("window-close"));
+	m_volumeMenu->setIcon(QIcon::fromTheme("player-volume"));
 
 	connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(action(QSystemTrayIcon::ActivationReason)));
 	connect(menu, SIGNAL(aboutToShow()), this, SLOT(menuAboutToShow()));

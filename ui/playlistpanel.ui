@@ -17,7 +17,16 @@
    <property name="spacing">
     <number>6</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -25,7 +34,16 @@
      <property name="spacing">
       <number>6</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -68,9 +86,18 @@
    <item>
     <layout class="QHBoxLayout">
      <property name="spacing">
-      <number>6</number>
+      <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -80,6 +107,10 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="media-playlist-shuffle">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -94,6 +125,10 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset theme="media-playlist-repeat">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -106,6 +141,10 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="view-refresh">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -139,6 +178,10 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset theme="media-playlist-shuffle">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -151,6 +194,10 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="document-save-as">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="autoExclusive">
         <bool>false</bool>
@@ -184,6 +231,10 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset theme="list-remove">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -197,6 +248,10 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset theme="image-crop-symbolic">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -206,6 +261,10 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="edit-clear-all">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

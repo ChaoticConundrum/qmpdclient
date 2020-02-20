@@ -19,7 +19,6 @@
 
 #include "config.h"
 #include "debug.h"
-#include "iconmanager.h"
 #include "mpdsonglist.h"
 #include "passivepopup.h"
 #include "serverinfo.h"
@@ -55,7 +54,6 @@ Config::Config() :
 Config *Config::instance() {
 	if (!m_instance) {
 		m_instance = new Config;
-		IconManager::update();
 	}
 	return m_instance;
 }
@@ -277,21 +275,6 @@ QFont Config::font() const {
 
 bool Config::autoResizeColumns() const {
 	return value("/looknfeel/autoresizecolumns", true).toBool();
-}
-
-// Icon set
-void Config::setIconSet(const QString &dir) {
-	const QString orig = iconSetPath();
-	setValue("/looknfeel/iconset", dir);
-	if (orig != dir) {
-		IconManager::update();
-		emit iconSetChanged();
-	}
-}
-
-QString Config::iconSetPath() const {
-	QString path = value("/looknfeel/iconset", ":/icons/crystal_amarok").toString();
-	return path;
 }
 
 // Playlist

@@ -45,12 +45,10 @@ private slots:
 	void on_testLine_textChanged(const QString &);
 	void on_upButton_clicked();
 	void crossfadeChanged();
-	void iconsetChanged(QListWidgetItem *);
 	void localeChanged(QListWidgetItem *);
 	void notifierChanged(int);
 	void outputChanged(QTreeWidgetItem *, int);
 	void serverSelectionChanged();
-	void styleChanged(QListWidgetItem *);
 	void hashLastFmPassword();
 	void setLastFmSlider(int);
 	void setLastFmSpiner(int);
@@ -63,11 +61,9 @@ private:
 	void initConnectionPage();
 	void initCoverArtPage();
 	void initLookAndFeelPage();
-	void initIconSetPage();
 	void initLibraryPage();
 	void initDirectoriesPage();
 	void initPlaylistPage();
-	void initStylePage();
 	void initShortcutPage();
 	void initLanguagePage();
 	void initDynamicPlaylistPage();

@@ -18,7 +18,6 @@
  */
 
 #include "config.h"
-#include "iconmanager.h"
 #include "mpdconnection.h"
 #include "mpdsongmodel.h"
 #include "radioview.h"
@@ -63,7 +62,7 @@ void RadioView::newStation() {
 	QDialog *dia = new QDialog(this);
 	Ui_AddRadioDialog *ard = new Ui_AddRadioDialog;
 	ard->setupUi(dia);
-	ard->addRadioDialogLabel->setPixmap(IconManager::pixmap("addradiodialog", 32));
+	ard->addRadioDialogLabel->setPixmap(QIcon::fromTheme("audio-radio").pixmap(32));
 	dia->resize(300, 100);
 	if (dia->exec() == QDialog::Accepted) {
 		if (!ard->title->text().isEmpty() && !ard->url->text().isEmpty()) {

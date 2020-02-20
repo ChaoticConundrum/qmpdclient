@@ -51,7 +51,6 @@ public slots:
 private slots:
 	void alternatingChanged(bool);
 	void fontChanged(const QFont &);
-	void iconSetChanged();
 	void localeChanged(const QString &);
 	void opaqueResizeChanged(bool);
 private:

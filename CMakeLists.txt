@@ -50,7 +50,6 @@ set(QMPDClient_srcs
 	src/dynamicplaylist.cpp
 	src/fileview.cpp
 	src/headerview.cpp
-	src/iconmanager.cpp
 	src/idealbar.cpp
 	src/idealsplitter.cpp
 	src/lastfmsubmitter.cpp
@@ -133,7 +132,6 @@ set(QMPDClient_srcs
 	src/dynamicplaylist.h
 	src/fileview.h
 	src/headerview.h
-	src/iconmanager.h
 	src/idealbar.h
 	src/idealsplitter.h
 	src/lastfmsubmitter.h
