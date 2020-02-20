@@ -86,7 +86,7 @@
    <item>
     <layout class="QHBoxLayout">
      <property name="spacing">
-      <number>6</number>
+      <number>0</number>
      </property>
      <property name="leftMargin">
       <number>0</number>
@@ -109,7 +109,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="media-playlist-shuffle"/>
+        <iconset theme="media-playlist-shuffle">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -125,7 +126,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="media-playlist-repeat"/>
+        <iconset theme="media-playlist-repeat">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -141,7 +143,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="view-refresh"/>
+        <iconset theme="view-refresh">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -176,7 +179,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="media-playlist-shuffle"/>
+        <iconset theme="media-playlist-shuffle">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -192,7 +196,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="document-save-as"/>
+        <iconset theme="document-save-as">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="autoExclusive">
         <bool>false</bool>
@@ -227,7 +232,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="list-remove"/>
+        <iconset theme="list-remove">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -243,7 +249,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="image-crop-symbolic"/>
+        <iconset theme="image-crop-symbolic">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -256,7 +263,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="edit-clear-all"/>
+        <iconset theme="edit-clear-all">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
