@@ -39,7 +39,12 @@ ControlPanel::ControlPanel(QWidget *parent) : QWidget(parent),
 	Q_ASSERT(m_lyricsDialog);
 	Q_ASSERT(m_lastFm);
 	setupUi(this);
-	coverArtButton->setVisible(Config::instance()->showCoverArt());
+
+	// Set the cover art container to be a square based on toolbar height
+	auto height = coverArtContainer->parentWidget()->size().height();
+	coverArtContainer->setFixedSize(height, height);
+
+	coverArtContainer->setVisible(Config::instance()->showCoverArt());
 	updateVolume(-1);
 
 	connect(prevButton, SIGNAL(clicked()), MPD::instance(), SLOT(prev()));
@@ -139,15 +144,24 @@ void ControlPanel::setSong(const MPDSong &s) {
 	if (Config::instance()->showCoverArt()) {
 		m_coverArt->setSong(s);
 		if (m_coverArt->hasCoverArt()) {
-			coverArtButton->setIcon(m_coverArt->coverArt());
+			// set the size of the image to be within container
+			auto imageHeight = m_coverArt->coverArt().size().height();
+			auto imageWidth = m_coverArt->coverArt().size().width();
+			auto ratio = (float) coverArtContainer->size().height() /
+					(imageHeight > imageWidth ? imageHeight : imageWidth);
+			imageWidth *= ratio;
+			imageHeight *= ratio;
+			coverArtButton->setFixedSize(imageWidth, imageHeight);
+			coverArtButton->setPixmap(m_coverArt->coverArt());
 		} else {
-			coverArtButton->setIcon(QIcon::fromTheme("media-album-cover"));
+			coverArtButton->setFixedSize(coverArtContainer->size());
+			coverArtButton->setPixmap(QPixmap());
 		}
 	}
 }
 
 void ControlPanel::showCoverArtChanged(bool a) {
-	coverArtButton->setVisible(a);
+	coverArtContainer->setVisible(a);
 }
 
 void ControlPanel::updateVolume(int volume) {
