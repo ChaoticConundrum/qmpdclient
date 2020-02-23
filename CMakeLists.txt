@@ -41,7 +41,7 @@ set(QMPDClient_srcs
 	src/clickablelabel.cpp
 	src/config.cpp
 	src/controlpanel.cpp
-	src/coverartdialog.cpp
+	src/coverart.cpp
 	src/directorymodel.cpp
 	src/directorypanel.cpp
 	src/directoryview.cpp
@@ -122,7 +122,7 @@ set(QMPDClient_srcs
 	src/clickablelabel.h
 	src/config.h
 	src/controlpanel.h
-	src/coverartdialog.h
+	src/coverart.h
 	src/debug.h
 	src/directorymodel.h
 	src/directorypanel.h

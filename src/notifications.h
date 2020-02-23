@@ -20,13 +20,13 @@
 #ifndef NOTIFICATIONS_H
 #define NOTIFICATIONS_H
 
-#include "coverartdialog.h"
+#include "coverart.h"
 #include "mpdsong.h"
 
 #include <QObject>
 
 class QDBusInterface;
-class CoverArtDialog;
+class CoverArt;
 
 class Notifications
 	: public QObject
@@ -51,7 +51,7 @@ private:
 	bool m_dbus;
 	QDBusInterface *m_interface;
 	MPDSong m_previousSong;
-	CoverArtDialog *m_coverArt;
+	CoverArt *m_coverArt;
 };
 
 #endif

@@ -19,7 +19,7 @@
 
 #include "config.h"
 #include "controlpanel.h"
-#include "coverartdialog.h"
+#include "coverart.h"
 #include "lyricsdialog.h"
 #include "lastfmsubmitter.h"
 #include "mpd.h"
@@ -30,9 +30,10 @@
 #include <QPixmap>
 #include <QDir>
 #include <QUrl>
+#include <QtGui/QDesktopServices>
 
 ControlPanel::ControlPanel(QWidget *parent) : QWidget(parent),
-											  m_coverArt(new CoverArtDialog(this)),
+											  m_coverArt(new CoverArt()),
 											  m_lyricsDialog(new LyricsDialog(this)),
 											  m_lastFm(new LastFmSubmitter(this)) {
 	Q_ASSERT(m_coverArt);
@@ -56,7 +57,7 @@ ControlPanel::ControlPanel(QWidget *parent) : QWidget(parent),
 	connect(MPD::instance(), SIGNAL(timeUpdated(int, int)), timeSlider, SLOT(setTime(int, int)));
 	connect(MPD::instance(), SIGNAL(playingSongUpdated(const MPDSong &)), this, SLOT(setSong(const MPDSong &)));
 	connect(Config::instance(), SIGNAL(showCoverArtChanged(bool)), this, SLOT(showCoverArtChanged(bool)));
-	connect(coverArtButton, SIGNAL(clicked()), m_coverArt, SLOT(show()));
+	connect(coverArtButton, SIGNAL(clicked()), this, SLOT(openCoverArt()));
 	connect(lyricsButton, SIGNAL(clicked()), m_lyricsDialog, SLOT(show()));
 	connect(m_lastFm, SIGNAL(infoMsg(QString)), this, SIGNAL(infoMsg(QString)));
 	connect(scrobbleCheckBox, SIGNAL(toggled(bool)), Config::instance(), SLOT(setSubmitSongsToLastFm(bool)));
@@ -148,6 +149,10 @@ void ControlPanel::setSong(const MPDSong &s) {
 
 void ControlPanel::showCoverArtChanged(bool a) {
 	coverArtButton->setVisible(a);
+}
+
+void ControlPanel::openCoverArt() {
+	QDesktopServices::openUrl(QUrl::fromLocalFile(m_coverArt->fileLocation()));
 }
 
 void ControlPanel::updateVolume(int volume) {
