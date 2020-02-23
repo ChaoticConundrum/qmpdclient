@@ -30,7 +30,7 @@ Notifications::Notifications(QObject *parent)
 	: QObject(parent),
 	m_dbus(true),
 	m_interface(new QDBusInterface("org.freedesktop.Notifications", "/org/freedesktop/Notifications")),
-	m_coverArt(new CoverArt()) {
+	m_coverArt(new CoverArtDialog(0)) {
 	setObjectName("notifications");
 	connect(MPD::instance(), SIGNAL(playingSongUpdated(const MPDSong &)), this, SLOT(setSong(const MPDSong &)));
 }

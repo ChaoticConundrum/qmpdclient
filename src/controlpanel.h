@@ -22,7 +22,7 @@
 
 #include "ui_controlpanel.h"
 
-class CoverArt;
+class CoverArtDialog;
 class LyricsDialog;
 class MPDSong;
 class QShortcut;
@@ -40,10 +40,9 @@ private slots:
 	void setSong(const MPDSong &);
 	void showCoverArtChanged(bool);
 	void updateVolume(int);
-	void openCoverArt();
 
 private:
-	CoverArt *m_coverArt;
+	CoverArtDialog *m_coverArt;
 	LyricsDialog *m_lyricsDialog;
 	LastFmSubmitter * m_lastFm;
 	QShortcut *m_fwdKey, *m_rwdKey, *m_volUpKey, *m_volDnKey,

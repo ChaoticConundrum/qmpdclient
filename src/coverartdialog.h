@@ -24,17 +24,16 @@
 
 class MPDSong;
 
-class CoverArt : public QObject
+class CoverArtDialog : public QDialog, private Ui::CoverArtDialog
 {
 public:
+	CoverArtDialog(QWidget *);
 	QPixmap coverArt() const;
 	bool hasCoverArt() const;
 	void setSong(const MPDSong &);
-	QString fileLocation() const;
 
 private:
-	QPixmap m_pixmap;
-	QString m_imageFile;
+	QPixmap m_pixmap, m_pixmap_small;
 };
 
 #endif //COVERART_DIALOG_H

@@ -22,7 +22,7 @@
 #include "notifications.h"
 #include "passivepopup.h"
 #include "richtext.h"
-#include "coverart.h"
+#include "coverartdialog.h"
 #include <QApplication>
 #include <QDesktopWidget>
 

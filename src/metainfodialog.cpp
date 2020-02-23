@@ -26,7 +26,7 @@
 MetaInfoDialog::MetaInfoDialog(QWidget *parent, const MPDSongList &songs)
 	: QDialog(parent),
 	m_pos(0),
-	m_coverArt(new CoverArt()) {
+	m_coverArt(new CoverArtDialog(this)) {
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
 	m_songs = songs;

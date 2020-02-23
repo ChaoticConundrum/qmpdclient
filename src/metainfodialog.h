@@ -22,9 +22,9 @@
 
 #include "ui_metainfodialog.h"
 #include "mpdsonglist.h"
-#include "coverart.h"
+#include "coverartdialog.h"
 
-class CoverArt;
+class CoverArtDialog;
 
 class MetaInfoDialog
 	: public QDialog,
@@ -44,7 +44,7 @@ private:
 
 	int m_pos;
 	MPDSongList m_songs;
-	CoverArt *m_coverArt;
+	CoverArtDialog *m_coverArt;
 };
 
 #endif

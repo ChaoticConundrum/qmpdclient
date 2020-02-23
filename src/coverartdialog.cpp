@@ -18,23 +18,24 @@
  */
 
 #include <QDir>
-#include "coverart.h"
+#include "coverartdialog.h"
 #include "config.h"
 #include "mpdsong.h"
 
-QPixmap CoverArt::coverArt() const {
+CoverArtDialog::CoverArtDialog(QWidget *parent) : QDialog(parent) {
+	setWindowFlags(Qt::Tool);
+	setupUi(this);
+}
+
+QPixmap CoverArtDialog::coverArt() const {
 	return m_pixmap;
 }
 
-bool CoverArt::hasCoverArt() const {
+bool CoverArtDialog::hasCoverArt() const {
 	return !m_pixmap.isNull();
 }
 
-QString CoverArt::fileLocation() const {
-	return m_imageFile;
-}
-
-void CoverArt::setSong(const MPDSong &s) {
+void CoverArtDialog::setSong(const MPDSong &s) {
 	QDir imageDir((QFileInfo(Config::instance()->coverArtDir(), s.directory())).absoluteFilePath());
 
 	imageDir.setFilter(QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot | QDir::Readable);
@@ -48,12 +49,25 @@ void CoverArt::setSong(const MPDSong &s) {
 	if (imageDir.entryInfoList().count() == 0) {
 		imageDir.setNameFilters(QStringList() << "*.jpg" << "*.jpeg" << "*.gif" << "*.png");
 	}
+	
+	const QString imageFile = imageDir.entryInfoList().value(0).absoluteFilePath();
 
-	m_imageFile = imageDir.entryInfoList().value(0).absoluteFilePath();
-
-	m_pixmap = QPixmap(m_imageFile);
+	setWindowTitle(QString("file:/").append(imageFile));
+	m_pixmap = QPixmap(imageFile);
 
 	if (m_pixmap.isNull()) {
-		m_imageFile = "";
+		coverArtImageLabel->setText(QObject::tr("No cover art found."));
 	}
+	else {
+		int mh = Config::instance()->coverArtMaxHeight().toInt();
+		int mw = Config::instance()->coverArtMaxWidth().toInt();
+		if (mh == 0) mh = 1024;
+		if (mw == 0) mw = 768;
+		// resize image
+		if (m_pixmap.height() > mh) m_pixmap = m_pixmap.scaledToHeight(mh, Qt::SmoothTransformation);
+		if (m_pixmap.width() > mw) m_pixmap = m_pixmap.scaledToWidth(mw, Qt::SmoothTransformation);
+		coverArtImageLabel->setPixmap(m_pixmap); // set image
+	}
+
+	setFixedSize(minimumSizeHint());
 }
