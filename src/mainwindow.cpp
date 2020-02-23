@@ -259,7 +259,7 @@ void MainWindow::setStats(const MPDStats &stats) {
 
 void MainWindow::showHide() {
 	Q_ASSERT(m_trayIcon);
-	if (Config::instance()->trayIconEnabled() && Config::instance()->minimizeToTray() && m_trayIcon->isVisible())
+	if (Config::instance()->trayIconEnabled() && m_trayIcon->isVisible())
 	{
 		if(isVisible())
 			hide();
