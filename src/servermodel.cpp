@@ -133,7 +133,11 @@ void ServerModel::deleteServer(const QModelIndex &in) {
 bool ServerModel::moveUp(const QModelIndex &idx) {
 	if (!idx.isValid() || idx.row() - 1 < 0)
 		return false;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
 	m_servers.swapItemsAt(idx.row(), idx.row() - 1);
+#else
+	m_servers.swap(idx.row(), idx.row() - 1);
+#endif
 	Config::instance()->setServers(m_servers);
 	emit dataChanged(index(idx.row() - 1, 0), index(idx.row(), 3));
 	return true;
@@ -142,7 +146,11 @@ bool ServerModel::moveUp(const QModelIndex &idx) {
 bool ServerModel::moveDown(const QModelIndex &idx) {
 	if (!idx.isValid() || idx.row() + 1 >= m_servers.size())
 		return false;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
 	m_servers.swapItemsAt(idx.row(), idx.row() + 1);
+#else
+	m_servers.swap(idx.row(), idx.row() + 1);
+#endif
 	Config::instance()->setServers(m_servers);
 	emit dataChanged(index(idx.row(), 0), index(idx.row() + 1, 3));
 	return true;
