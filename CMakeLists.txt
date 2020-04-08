@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 project(QMPDClient C CXX)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Network Xml XmlPatterns DBus X11Extras)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets Network Xml XmlPatterns DBus X11Extras LinguistTools)
 
 if(APPLE)
 	# ??
@@ -209,7 +209,7 @@ qt5_wrap_ui(QMPDClient_ui_srcs
 	ui/shoutcastpanel.ui
 	)
 
-set(TRANSLATIONS
+set(TS_FILES
 	lang/cs_CZ.ts
 	lang/de_DE.ts
 	lang/es_ES.ts
@@ -227,29 +227,8 @@ set(TRANSLATIONS
 	lang/zh_TW.ts
 	)
 
-set(COMPILED_TRANSLATIONS
-	lang/cs_CZ.qm
-	lang/de_DE.qm
-	lang/es_ES.qm
-	lang/fr_FR.qm
-	lang/it_IT.qm
-	lang/nl_NL.qm
-	lang/nn_NO.qm
-	lang/no_NO.qm
-	lang/pt_BR.qm
-	lang/ru_RU.qm
-	lang/sv_SE.qm
-	lang/tr_TR.qm
-	lang/uk_UA.qm
-	lang/zh_CN.qm
-	lang/zh_TW.qm
-	)
-
-add_custom_command(OUTPUT ${COMPILED_TRANSLATIONS}
-	DEPENDS ${TRANSLATIONS}
-	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-	COMMAND "${QT_LRELEASE_EXECUTABLE}" ${TRANSLATIONS}
-	)
+set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/l10n")
+qt5_add_translation(COMPILED_TRANSLATIONS ${TS_FILES})
 
 add_executable(qmpdclient
 	${QMPDClient_srcs}
