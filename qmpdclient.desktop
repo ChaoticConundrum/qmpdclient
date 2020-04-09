@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=QMPDClient
-GenericName=Qt4 based MPD client
-Comment=A nicer MPD client
+GenericName=MPD Client
+Comment=A Qt based MPD client
 Exec=qmpdclient
 Categories=Qt;Network;Music;
 Icon=qmpdclient
